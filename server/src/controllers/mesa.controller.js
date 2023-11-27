@@ -1,5 +1,5 @@
 const Mesa = require("../models/mesa.model");
-
+const productsModel = require("../models/products.model");
 const allMesas = async (req,res) => {
   try {
     const allMesas = await Mesa.find({})
@@ -54,4 +54,18 @@ const deleteMesaForAdmin = async (req, res) => {
   }
 };
 
-module.exports = { createMesa, editMesa, deleteMesaForAdmin, allMesas };
+const addProductMesa = async (req,res) => {
+try {
+  const {productos} = req.body 
+  const {id} = req.params
+  const findMesa = await Mesa.findById(id)
+  findMesa.pedido = findMesa.pedido.concat(productos);
+  await findMesa.save()
+  res.status(200).json({ message: "Producto agregado a la mesa correctamente" });
+} catch (error) {
+  res.status(400).json({error: error.message})
+}
+
+}
+
+module.exports = { createMesa, editMesa, deleteMesaForAdmin, allMesas, addProductMesa };
