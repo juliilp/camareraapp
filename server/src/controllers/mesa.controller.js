@@ -1,4 +1,13 @@
 const Mesa = require("../models/mesa.model");
+
+const allMesas = async (req,res) => {
+  try {
+    const allMesas = await Mesa.find({})
+    res.status(200).json(allMesas)
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
 const createMesa = async (req, res) => {
   try {
     const { pedido, pedidoListo, pedidoParaEntregar } = req.body;
@@ -45,4 +54,4 @@ const deleteMesaForAdmin = async (req, res) => {
   }
 };
 
-module.exports = { createMesa, editMesa, deleteMesaForAdmin };
+module.exports = { createMesa, editMesa, deleteMesaForAdmin, allMesas };
