@@ -64,7 +64,7 @@ const loginUser = async (req, res) => {
 const editUser = (req, res) => {};
 
 const userLogout = (req,res) => {
-  jwt.sign("", "token123", {expiresIn: new Date(0)})
+  jwt.sign("", "token", {expiresIn: new Date(0)})
 }
 
 const editSettingsUser = async (req,res) => {
