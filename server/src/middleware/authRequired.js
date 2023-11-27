@@ -13,6 +13,9 @@ const authRequired =  (req, res, next) => {
       res.status(400).json(err);
     }
     const User = await userModel.findById(user.id)
+    if(User.bannedAccount === true) {
+      return res.status(401).json({message:"Tu cuenta está baneada"})
+    }
     req.user = User
   });
   next();
