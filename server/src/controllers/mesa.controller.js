@@ -68,4 +68,16 @@ try {
 
 }
 
-module.exports = { createMesa, editMesa, deleteMesaForAdmin, allMesas, addProductMesa };
+const MesaPorId = async (req,res) => {
+  try {
+    const findMesa = await Mesa.findById(req.params.id)
+    if(!findMesa) {
+      res.status(404).json({message: "No se encontró la mesa"})
+    }
+    res.status(200).json({findMesa})
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+
+module.exports = { createMesa, editMesa, deleteMesaForAdmin, allMesas, addProductMesa, MesaPorId };
