@@ -6,6 +6,9 @@
   import Chef from './vistas/Chef'
   import Mosa from './vistas/Mosa'
 import MesaID from './vistas/MesaID'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import axios from 'axios'
+axios.defaults.baseURL = "http://localhost:3001/"
   export default function App() {
 
     const routes = createBrowserRouter([
@@ -37,9 +40,14 @@ import MesaID from './vistas/MesaID'
         element: <MesaID />
       }
     ])
+    const queryClient = new QueryClient()
+
     return (
       <>
+      <QueryClientProvider client={queryClient} >
+
     <RouterProvider router={routes} />
+      </QueryClientProvider>
       </>
     )
   }
