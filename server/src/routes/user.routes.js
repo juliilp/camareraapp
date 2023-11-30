@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { userCreate, allUser, loginUser, editSettingsUser, userLogout } = require("../controllers/user.controller");
+const { userCreate, allUser, loginUser, editSettingsUser, userLogout, verifyToken } = require("../controllers/user.controller");
 const isAdmin = require("../middleware/isAdmin");
 const authRequired = require("../middleware/authRequired");
 
@@ -10,4 +10,5 @@ userRouter.post("/login", loginUser)
 userRouter.post("/registro", userCreate)
 userRouter.get("/logout", userLogout)
 userRouter.put("/editSettingsUser/:id",authRequired ,isAdmin,editSettingsUser)
+userRouter.get("/verifyToken", verifyToken)
 module.exports = userRouter

@@ -9,7 +9,7 @@ import MesaID from "./vistas/MesaID";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect } from "react";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 axios.defaults.baseURL = "http://localhost:3001/";
 export default function App() {
   const routes = createBrowserRouter([
@@ -45,10 +45,20 @@ export default function App() {
   const queryClient = new QueryClient();
 
   useEffect(() => {
-    const cookies = Cookies.get()
-    if(cookies) {
+   async  function sessionUser() {
+      const cookies = Cookies.get()
       console.log(cookies.token)
+      if(cookies.token) {
+        try {
+          const res = await axios.get("/user/verifyToken", {withCredentials: true})
+          console.log(res.data)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+  
     }
+    sessionUser()
   }, []);
 
   return (

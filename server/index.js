@@ -11,7 +11,7 @@ const startServer = async () => {
       console.log("Funcionando en la ruta 3001");
       if(!rutaAccedida) {
         rutaAccedida = true
-        createDefaultUsers(); 
+        // createDefaultUsers(); 
       }
     });
   } catch (error) {

@@ -78,4 +78,30 @@ const editSettingsUser = async (req,res) => {
   })
 }
 
-module.exports = { userCreate, allUser, editUser, loginUser, editSettingsUser, userLogout };
+const verifyToken = (req,res) => {
+  const token = req.cookies.token
+  console.log(req.cookies)
+  if(!token) {
+    res.status(401).json({error: "No hay token"})
+  }
+  jwt.verify(token, "token123", async (err,user) => {
+    if(err) return res.status(401).json("error")
+
+    if(!user) {
+      return res.status(401).json({error:"No hay user"})
+    }
+    const userFind = await User.findById(user.id)
+    if(!userFind) {
+      return res.status(404).json({error: "No se encontro el usuario"})
+    }
+    return res.status(200).json({
+      id: userFind.id,
+      email: userFind.email,
+      nombre: userFind.nombre,
+      isAdmin: userFind.isAdmin,
+      isChecked: userFind.isChecked,
+      bannedAccount: userFind.bannedAccount,
+    })
+  })
+}
+module.exports = { userCreate, allUser, editUser, loginUser, editSettingsUser, userLogout, verifyToken };
