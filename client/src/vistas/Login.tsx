@@ -1,8 +1,7 @@
 import { useState } from "react"
 import axios from 'axios'
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch} from "react-redux"
 import { addUser } from "../redux/slices/userSlice"
-import { RootState } from "../redux/store"
 export default function Login() {
   const dispatch = useDispatch()
   const [user, setUser] = useState({
@@ -32,8 +31,6 @@ export default function Login() {
       password:""
     })
   }
-  const state = useSelector((state: RootState) => state.user)
-  console.log(state.user)
   return (
     <main>
       <form >
