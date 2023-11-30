@@ -10,6 +10,8 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, AuthenticateFalse, AuthenticateTrue } from "./redux/slices/userSlice";
 axios.defaults.baseURL = "http://localhost:3001/";
 export default function App() {
   const routes = createBrowserRouter([
@@ -43,15 +45,17 @@ export default function App() {
     },
   ]);
   const queryClient = new QueryClient();
-
+  const dispatch = useDispatch()
   useEffect(() => {
    async  function sessionUser() {
       const cookies = Cookies.get()
       if(cookies.token) {
         try {
           const res = await axios.get("/user/verifyToken", {withCredentials: true})
-          console.log(res.data)
+          dispatch(addUser(res.data))
+          dispatch(AuthenticateTrue())
         } catch (error) {
+          dispatch(AuthenticateFalse())
           console.log(error)
         }
       }
@@ -59,7 +63,6 @@ export default function App() {
     }
     sessionUser()
   }, []);
-
   return (
     <>
       <QueryClientProvider client={queryClient}>

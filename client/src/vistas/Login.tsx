@@ -1,6 +1,10 @@
 import { useState } from "react"
 import axios from 'axios'
+import { useDispatch, useSelector } from "react-redux"
+import { addUser } from "../redux/slices/userSlice"
+import { RootState } from "../redux/store"
 export default function Login() {
+  const dispatch = useDispatch()
   const [user, setUser] = useState({
     email:"",
     password:""
@@ -12,20 +16,24 @@ export default function Login() {
       [e.target.name] : e.target.value
     })
   }
-
+  
   const handlerSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault()
       const res = await axios.post("/user/login", {email: user.email, password: user.password}, {withCredentials: true})
       console.log(res.data)
-    } catch (error : any) {
-      console.log(error.message)
+      dispatch(addUser(res.data.user))
+      
+    } catch (error ) {
+      console.log(error)
     }
     setUser({
       email:"",
       password:""
     })
   }
+  const state = useSelector((state: RootState) => state.user)
+  console.log(state.user)
   return (
     <main>
       <form >
