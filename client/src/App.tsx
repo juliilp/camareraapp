@@ -10,7 +10,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addUser, AuthenticateFalse, AuthenticateTrue } from "./redux/slices/userSlice";
 axios.defaults.baseURL = "http://localhost:3001/";
 export default function App() {
