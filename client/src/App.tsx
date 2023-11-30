@@ -47,7 +47,6 @@ export default function App() {
   useEffect(() => {
    async  function sessionUser() {
       const cookies = Cookies.get()
-      console.log(cookies.token)
       if(cookies.token) {
         try {
           const res = await axios.get("/user/verifyToken", {withCredentials: true})
