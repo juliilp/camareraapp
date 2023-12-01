@@ -1,11 +1,19 @@
-import useMesa from "../hooks/useMesa"
+import MesaComponent from "../components/MesaComponent";
+import useMesa from "../hooks/useMesa";
 
 export default function Home() {
-  const {data} = useMesa()
-  console.log(data)
+  const { data, isError, isLoading, isSuccess } = useMesa();
+  console.log(data);
   return (
     <main>
-      hola
+      {isError && <p>Error</p>}
+      {isLoading && <p>is Loading</p>}
+      {isSuccess &&
+        data?.map((m) => {
+          return (
+            <MesaComponent key={m._id} numeroMesa={m.numeroMesa} _id={m._id} />
+          );
+        })}
     </main>
-  )
+  );
 }
