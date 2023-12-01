@@ -1,13 +1,13 @@
 const Mesa = require("../models/mesa.model");
 const productsModel = require("../models/products.model");
-const allMesas = async (req,res) => {
+const allMesas = async (req, res) => {
   try {
-    const allMesas = await Mesa.find({})
-    res.status(200).json(allMesas)
+    const allMesas = await Mesa.find({});
+    res.status(200).json(allMesas);
   } catch (error) {
-    res.status(400).json({error: error.message})
+    res.status(400).json({ error: error.message });
   }
-}
+};
 const createMesa = async (req, res) => {
   try {
     const { pedido, pedidoListo, pedidoParaEntregar } = req.body;
@@ -34,7 +34,7 @@ const editMesa = async (req, res) => {
     if (!editMesa) {
       return res.status(404).json({ message: "No se encontró la mesa" });
     }
-    
+    res.status(200).json("Se edito la mesa correctamente");
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -43,41 +43,49 @@ const editMesa = async (req, res) => {
 const deleteMesaForAdmin = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = req.user
+    const user = req.user;
     const findMesaAndDelete = Mesa.findByIdAndDelete(id);
     res.status(200).json({
       mesaBorrada: findMesaAndDelete,
-      user
+      user,
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-const addProductMesa = async (req,res) => {
-try {
-  const {productos} = req.body 
-  const {id} = req.params
-  const findMesa = await Mesa.findById(id)
-  findMesa.pedido = findMesa.pedido.concat(productos);
-  await findMesa.save()
-  res.status(200).json({ message: "Producto agregado a la mesa correctamente" });
-} catch (error) {
-  res.status(400).json({error: error.message})
-}
-
-}
-
-const MesaPorId = async (req,res) => {
+const addProductMesa = async (req, res) => {
   try {
-    const findMesa = await Mesa.findById(req.params.id)
-    if(!findMesa) {
-      res.status(404).json({message: "No se encontró la mesa"})
-    }
-    res.status(200).json({findMesa})
+    const { productos } = req.body;
+    const { id } = req.params;
+    const findMesa = await Mesa.findById(id);
+    findMesa.pedido = findMesa.pedido.concat(productos);
+    await findMesa.save();
+    res
+      .status(200)
+      .json({ message: "Producto agregado a la mesa correctamente" });
   } catch (error) {
-    res.status(400).json({error: error.message})
+    res.status(400).json({ error: error.message });
   }
-}
+};
 
-module.exports = { createMesa, editMesa, deleteMesaForAdmin, allMesas, addProductMesa, MesaPorId };
+const MesaPorId = async (req, res) => {
+  try {
+    const findMesa = await Mesa.findById(req.params.id);
+    if (!findMesa) {
+      res.status(404).json({ message: "No se encontró la mesa" });
+    }
+    res.status(200).json({ findMesa });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  createMesa,
+  editMesa,
+  deleteMesaForAdmin,
+  allMesas,
+  addProductMesa,
+  MesaPorId,
+};
