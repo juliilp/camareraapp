@@ -1,21 +1,59 @@
-import axios from "axios"
-import { useParams } from "react-router-dom"
-import {useEffect, useState} from 'react'
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import MesaInterface from "../interfaces/Mesa";
 export default function MesaID() {
-  const {id} = useParams()
-  const [mesaId, setMesaId] = useState()
-
+  const { id } = useParams();
+  const [mesaId, setMesaId] = useState<MesaInterface>();
+  const [allProducts, setAllProducts] = useState<string[]>();
+  const [newPedido, setNewPedido] = useState<string[]>([]);
   useEffect(() => {
-    
-    async function peticionMesa() {
-      const res = await axios.get("/mesa/" + id)
-      console.log(res)
-      setMesaId(res.data)
+    async function allPromise() {
+      try {
+        const [mesaResponse, allProducts] = await Promise.all([
+          await axios.get("/mesa/" + id),
+          await axios.get("/productos/allProducts"),
+        ]);
+        const mesaData = mesaResponse.data.findMesa;
+        const productsData = allProducts.data;
+        setMesaId(mesaData);
+        setAllProducts(productsData);
+      } catch (error) {
+        console.log(error);
+      }
     }
-    peticionMesa()
-  }, [])
-  console.log(mesaId)
+    allPromise();
+  }, []);
+
+  console.log(allProducts);
+
+  const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectPedido = e.target.value;
+
+    if (!newPedido.includes(selectPedido)) {
+      setNewPedido([...newPedido, selectPedido]);
+    } else {
+      const updatedPedido = newPedido.filter((p) => p !== selectPedido);
+      setNewPedido(updatedPedido);
+    }
+  };
   return (
-    <div>MesaID</div>
-  )
+    <section>
+      <span>Estas en la mesa: {mesaId && mesaId.numeroMesa}</span>
+      <article onChange={onChangeSelect}>
+        {allProducts &&
+          allProducts.map((p, index) => {
+            return (
+              <>
+                <input key={index} value={p} type="checkbox" />
+                <span>{p}</span>
+              </>
+            );
+          })}
+      </article>
+
+      <p>Así va a quedar el producto:</p>
+      {newPedido && newPedido}
+    </section>
+  );
 }
