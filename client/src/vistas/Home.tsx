@@ -3,7 +3,6 @@ import useMesa from "../hooks/useMesa";
 
 export default function Home() {
   const { data, isError, isLoading, isSuccess } = useMesa();
-  console.log(data);
   return (
     <main>
       {isError && <p>Error</p>}
