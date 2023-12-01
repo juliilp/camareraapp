@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MesaInterface from "../interfaces/Mesa";
 export default function MesaID() {
@@ -7,6 +7,7 @@ export default function MesaID() {
   const [mesaId, setMesaId] = useState<MesaInterface>();
   const [allProducts, setAllProducts] = useState<string[]>();
   const [newPedido, setNewPedido] = useState<string[]>([]);
+  const navigate = useNavigate();
   useEffect(() => {
     async function allPromise() {
       try {
@@ -48,6 +49,7 @@ export default function MesaID() {
         });
         if (res.status === 200) {
           alert("Datos enviados");
+          navigate("/");
         }
       } catch (error) {
         console.log(error);
