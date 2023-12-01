@@ -25,8 +25,6 @@ export default function MesaID() {
     allPromise();
   }, []);
 
-  console.log(allProducts);
-
   const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectPedido = e.target.value;
 
@@ -37,6 +35,25 @@ export default function MesaID() {
       setNewPedido(updatedPedido);
     }
   };
+
+  const handlerEnviarDatos = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const infoConfirm = confirm("Estas seguro de enviar los datos?");
+    if (infoConfirm) {
+      try {
+        const res = await axios.put(`mesa/editMesa/${id}`, {
+          pedidoListo: true,
+          pedido: newPedido,
+          pedidoParaEntregar: false,
+        });
+        if (res.status === 200) {
+          alert("Datos enviados");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   return (
     <section>
       <span>Estas en la mesa: {mesaId && mesaId.numeroMesa}</span>
@@ -44,16 +61,18 @@ export default function MesaID() {
         {allProducts &&
           allProducts.map((p, index) => {
             return (
-              <>
-                <input key={index} value={p} type="checkbox" />
+              <article key={index}>
+                <input value={p} type="checkbox" />
                 <span>{p}</span>
-              </>
+              </article>
             );
           })}
       </article>
 
       <p>Así va a quedar el producto:</p>
       {newPedido && newPedido}
+
+      <button onClick={handlerEnviarDatos}>Enviar pedido</button>
     </section>
   );
 }
