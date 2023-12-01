@@ -1,19 +1,20 @@
-import useUsers from "../hooks/useUsers"
-import { useNavigate } from "react-router-dom"
-import {useEffect} from 'react'
+import useUsers from "../hooks/useUsers";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 export default function DashBoard() {
-  const {user} = useUsers()
-  const navigate = useNavigate()
+  const { user } = useUsers();
+  const navigate = useNavigate();
 
-
-   useEffect(() => {
-    if(user.isAdmin === false) {
-      navigate("/")
+  useEffect(() => {
+    if (
+      !user ||
+      typeof user.isAdmin === "undefined" ||
+      user.isAdmin === false
+    ) {
+      navigate("/");
     }
-   },[user])
+  }, [user, navigate]);
 
-  
-  return (
-    <div>DashBoard</div>
-  )
+  return <div>DashBoard</div>;
 }
