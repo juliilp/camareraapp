@@ -23,7 +23,7 @@ const userCreate = async (req, res) => {
     });
 
     const token = await createToken({ id: createUser.id });
-    res.cookie("token", token);
+    res.cookie("token", token, { sameSite: "None", secure: true });
     res.status(200).json({ user: createUser, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -45,16 +45,19 @@ const loginUser = async (req, res) => {
     const findUser = await User.findOne({ email });
 
     if (!findUser) {
-     return  res.status(401).json({ error: "El email no existe" });
+      return res.status(401).json({ error: "El email no existe" });
     }
     const comparePassword = await compare(findUser.password, password);
-    
+
     if (comparePassword) {
       return res.status(400).json({ error: "Contraseña incorrecta" });
     }
 
-    const token = await createToken({id: findUser.id});
-    res.cookie("token", token);
+    const token = await createToken({ id: findUser.id });
+    res.cookie("token", token, {
+      sameSite: "None",
+      secure: true,
+    });
     res.status(200).json({ user: findUser });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -63,36 +66,40 @@ const loginUser = async (req, res) => {
 
 const editUser = (req, res) => {};
 
-const userLogout = (req,res) => {
-  jwt.sign("", "token", {expiresIn: new Date(0)})
-}
+const userLogout = (req, res) => {
+  jwt.sign("", "token", { expiresIn: new Date(0) });
+};
 
-const editSettingsUser = async (req,res) => {
-  const {id} = req.params
-  const {isChecked,isAdmin,bannedAccount} = req.body
-  const findUser = await userModel.findByIdAndUpdate(id, {isChecked,isAdmin, bannedAccount})
+const editSettingsUser = async (req, res) => {
+  const { id } = req.params;
+  const { isChecked, isAdmin, bannedAccount } = req.body;
+  const findUser = await userModel.findByIdAndUpdate(id, {
+    isChecked,
+    isAdmin,
+    bannedAccount,
+  });
 
   res.status(200).json({
-    message:"Usuario actualizado",
-    usuario: findUser
-  })
-}
+    message: "Usuario actualizado",
+    usuario: findUser,
+  });
+};
 
-const verifyToken = (req,res) => {
-  const token = req.cookies.token
-  console.log(req.cookies)
-  if(!token) {
-    res.status(401).json({error: "No hay token"})
+const verifyToken = (req, res) => {
+  const token = req.cookies.token;
+  console.log(req.cookies);
+  if (!token) {
+    res.status(401).json({ error: "No hay token" });
   }
-  jwt.verify(token, "token123", async (err,user) => {
-    if(err) return res.status(401).json("error")
+  jwt.verify(token, "token123", async (err, user) => {
+    if (err) return res.status(401).json("error");
 
-    if(!user) {
-      return res.status(401).json({error:"No hay user"})
+    if (!user) {
+      return res.status(401).json({ error: "No hay user" });
     }
-    const userFind = await User.findById(user.id)
-    if(!userFind) {
-      return res.status(404).json({error: "No se encontro el usuario"})
+    const userFind = await User.findById(user.id);
+    if (!userFind) {
+      return res.status(404).json({ error: "No se encontro el usuario" });
     }
     return res.status(200).json({
       id: userFind.id,
@@ -101,7 +108,15 @@ const verifyToken = (req,res) => {
       isAdmin: userFind.isAdmin,
       isChecked: userFind.isChecked,
       bannedAccount: userFind.bannedAccount,
-    })
-  })
-}
-module.exports = { userCreate, allUser, editUser, loginUser, editSettingsUser, userLogout, verifyToken };
+    });
+  });
+};
+module.exports = {
+  userCreate,
+  allUser,
+  editUser,
+  loginUser,
+  editSettingsUser,
+  userLogout,
+  verifyToken,
+};
