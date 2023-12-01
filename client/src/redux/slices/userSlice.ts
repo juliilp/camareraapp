@@ -3,12 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../../interfaces/User"; 
 interface initialStateInterface {
   user: User;
-  isAuthenticate: Boolean;
+  isAuthenticate: Boolean | null;
 }
 
 const initialState: initialStateInterface = {
   user: {},
-  isAuthenticate: false,
+  isAuthenticate: null,
 };
 
 const userSlice = createSlice({

@@ -3,18 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function DashBoard() {
-  const { user } = useUsers();
+  const { user, isAuthenticate } = useUsers();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (
-      !user ||
-      typeof user.isAdmin === "undefined" ||
+      isAuthenticate === false ||
       user.isAdmin === false
     ) {
       navigate("/");
     }
-  }, [user, navigate]);
+  }, [user, navigate, isAuthenticate]);
 
   return <div>DashBoard</div>;
 }
