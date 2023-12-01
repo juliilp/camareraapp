@@ -14,7 +14,7 @@ const editProduct = async (req, res) => {
     const { id } = req.params;
     const { nombre } = req.body;
     const editProduct = await Products.findByIdAndUpdate(id, { nombre });
-    res.status(200).json(editProduct)
+    res.status(200).json(editProduct);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -37,7 +37,9 @@ const createProduct = async (req, res) => {
 const allProducts = async (req, res) => {
   try {
     const allProducts = await Products.find({});
-    res.status(200).json(allProducts);
+    const productsName = allProducts.map((n) => n.nombre);
+
+    res.status(200).json(productsName);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
