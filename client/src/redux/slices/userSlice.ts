@@ -1,15 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../../interfaces/User"; 
+import allUsers from "../../utils/allUsers";
+
 interface initialStateInterface {
   user: User;
   isAuthenticate: Boolean | null;
+  allUser: User[];
 }
 
 const initialState: initialStateInterface = {
   user: {},
   isAuthenticate: null,
+  allUser: [],
 };
+
+export const fetchAllUsers = createAsyncThunk("user/fetchAllUsers", async () => {
+  const users: User[] = await allUsers();
+  return users;
+});
 
 const userSlice = createSlice({
   name: "userSlice",
@@ -25,9 +34,13 @@ const userSlice = createSlice({
       state.isAuthenticate = false;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchAllUsers.fulfilled, (state, action) => {
+      state.allUser = action.payload;
+    });
+  },
 });
 
-export const { addUser, AuthenticateTrue, AuthenticateFalse } =
-  userSlice.actions;
+export const { addUser, AuthenticateTrue, AuthenticateFalse } = userSlice.actions;
 
 export default userSlice.reducer;
