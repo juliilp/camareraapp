@@ -1,9 +1,13 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from 'axios'
 import { useDispatch} from "react-redux"
 import { addUser } from "../redux/slices/userSlice"
+import useUsers from "../hooks/useUsers"
+import { useNavigate } from "react-router-dom"
 export default function Login() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const {isAuthenticate} = useUsers()
   const [user, setUser] = useState({
     email:"",
     password:""
@@ -31,6 +35,12 @@ export default function Login() {
       password:""
     })
   }
+
+  useEffect(() => {
+    if(isAuthenticate){
+      navigate("/")
+    }
+  },[isAuthenticate])
   return (
     <main>
       <form >

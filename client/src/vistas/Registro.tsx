@@ -1,6 +1,10 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import useUsers from "../hooks/useUsers";
+import { useNavigate } from "react-router-dom";
 export default function Registro() {
+  const navigate = useNavigate()
+  const {isAuthenticate} = useUsers()
   const [user, setUser] = useState({
     nombre: "",
     email: "",
@@ -28,7 +32,13 @@ export default function Registro() {
     });
 
   };
-  return (
+
+  useEffect(() => {
+    if(isAuthenticate) {
+      navigate("/")
+    }
+  }, [isAuthenticate])
+s  return (
     <main>
       <form>
         <span>Nombre</span>
