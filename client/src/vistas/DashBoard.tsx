@@ -18,25 +18,24 @@ export default function DashBoard() {
   }, [user, navigate, isAuthenticate]);
 
   useEffect(() => {
-    console.log("holas");
     dispatch(fetchAllUsers());
   }, []);
 
   return (
     <main>
-      {
-        allUser?.map((u: User, index) => {
-          return (
-            <UserAllUser
-              key={index}
-              email={u.email}
-              isAdmin={u.isAdmin}
-              isChecked={u.isChecked}
-              nombre={u.nombre}
-              bannedAccount={u.bannedAccount}
-            />
-          );
-        })}
+      {allUser?.map((u: User, index) => {
+        return (
+          <UserAllUser
+            key={index}
+            email={u.email!}
+            isAdmin={u.isAdmin!}
+            isChecked={u.isChecked!}
+            nombre={u.nombre!}
+            bannedAccount={u.bannedAccount!}
+            _id={u._id!}
+          />
+        );
+      })}
     </main>
   );
 }
