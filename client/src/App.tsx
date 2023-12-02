@@ -48,8 +48,9 @@ export default function App() {
   const dispatch = useDispatch()
   useEffect(() => {
    async  function sessionUser() {
-      const cookies = Cookies.get()
-      if(cookies.token) {
+      const token = Cookies.get("token")
+    
+      if(token) {
         try {
           const res = await axios.get("/user/verifyToken", {withCredentials: true})
           dispatch(addUser(res.data))
