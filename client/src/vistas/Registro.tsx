@@ -38,7 +38,7 @@ export default function Registro() {
       navigate("/")
     }
   }, [isAuthenticate])
-s  return (
+  return (
     <main>
       <form>
         <span>Nombre</span>
