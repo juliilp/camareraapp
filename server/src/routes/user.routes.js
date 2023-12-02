@@ -9,6 +9,6 @@ userRouter.get("/allUser", allUser )
 userRouter.post("/login", loginUser)
 userRouter.post("/registro", userCreate)
 userRouter.get("/logout", userLogout)
-userRouter.put("/editSettingsUser/:id",authRequired ,isAdmin,editSettingsUser)
+userRouter.put("/editSettingsUser/:id",editSettingsUser)
 userRouter.get("/verifyToken", verifyToken)
 module.exports = userRouter

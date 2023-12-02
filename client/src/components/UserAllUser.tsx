@@ -21,16 +21,19 @@ const UserAllUser: React.FC<User> = ({
 }) => {
   const [switchDialog, setSwitchDialog] = useState<boolean>(false);
 
-  const onUpdateUser = (updatedUser: {
+  const onUpdateUser = async (updatedUser: {
     isAdmin: boolean;
     isChecked: boolean;
     bannedAccount: boolean;
   }) => {
-    axios.put(`/user/editSettingsUser/${_id}`, {
+   const res = await  axios.put(`/user/editSettingsUser/${_id}`, {
       isChecked: updatedUser.isChecked,
       isAdmin: updatedUser.isAdmin,
       bannedAccount: updatedUser.bannedAccount,
     });
+    if(res.status === 200) {
+      alert("Actualiza la pagina para ver los cambios")
+    }
     console.log("Usuario actualizado:", updatedUser);
   };
 
