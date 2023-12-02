@@ -12,7 +12,8 @@ export default function DashBoard() {
   const dispatch: ThunkDispatch<RootState, void, AnyAction> = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    if (isAuthenticate === false || user.isAdmin === false) {
+    console.log(isAuthenticate, user.isAdmin)
+    if (isAuthenticate === false || user.isAdmin === false ) {
       navigate("/");
     }
   }, [user, navigate, isAuthenticate]);
@@ -22,7 +23,7 @@ export default function DashBoard() {
   }, []);
 
   return (
-    <main>
+    <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" >
       {allUser?.map((u: User, index) => {
         return (
           <UserAllUser
