@@ -19,7 +19,8 @@ import {
 import RutaProtegidaAdmin from "./utils/RutaProtegidaAdmin";
 import RutaUserAuthenticate from "./utils/RutaUserAuthenticate";
 import Navbar from "./components/Navbar";
-axios.defaults.baseURL = "http://localhost:3001/";
+axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.withCredentials = true
 export default function App() {
   const queryClient = new QueryClient();
   const dispatch = useDispatch();
