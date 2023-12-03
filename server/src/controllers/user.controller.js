@@ -67,7 +67,12 @@ const loginUser = async (req, res) => {
 const editUser = (req, res) => {};
 
 const userLogout = (req, res) => {
-  jwt.sign("", "token", { expiresIn: new Date(0) });
+  try {
+    res.clearCookie('token').status(200).json({ message: "Usuario deslogueado" });
+    res.status(200).json({message:"Usuario deslogueado"})
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
 };
 
 const editSettingsUser = async (req, res) => {
