@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import useUsers from "../hooks/useUsers";
 import ContadorPedidosTerminados from "./ContadorPedidosTerminados";
+import userLogout from "../utils/userLogout";
+import { useDispatch } from "react-redux";
 function Navbar() {
   const { user, isAuthenticate } = useUsers();
-  console.log(user);
+  const dispatch = useDispatch()
+
+  const handlerLogout = async () => await userLogout(dispatch)
   return (
     <header className="w-full h-10 border-b mb-4 ">
       <nav className="h-full">
@@ -30,6 +34,7 @@ function Navbar() {
           {
             isAuthenticate && <li>
                 <span>{user.nombre}</span>
+                <button onClick={handlerLogout} >Desloguear</button>
             </li>
           }
         </ul>
