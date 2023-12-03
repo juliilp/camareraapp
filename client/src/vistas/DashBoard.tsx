@@ -1,6 +1,5 @@
 import useUsers from "../hooks/useUsers";
-import { useNavigate } from "react-router-dom";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { fetchAllUsers } from "../redux/slices/userSlice";
@@ -9,21 +8,12 @@ import UserAllUser from "../components/UserAllUser";
 import { User } from "../interfaces/User";
 import SectionProducto from "../components/SectionProducto";
 export default function DashBoard() {
-  const { user, isAuthenticate, allUser } = useUsers();
-
+  const { allUser } = useUsers();
   const dispatch: ThunkDispatch<RootState, void, AnyAction> = useDispatch();
-  const navigate = useNavigate();
-  useEffect(() => {
-    console.log(isAuthenticate, user.isAdmin);
-    if (isAuthenticate === false || user.isAdmin === false || isAuthenticate === null) {
-      navigate("/");
-    }
-  }, [user, navigate, isAuthenticate]);
 
   useEffect(() => {
     dispatch(fetchAllUsers());
   }, []);
-
 
   return (
     <main className="">
@@ -44,7 +34,6 @@ export default function DashBoard() {
         })}
       </section>
       <SectionProducto />
-      
     </main>
   );
 }

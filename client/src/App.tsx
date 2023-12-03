@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { addUser, AuthenticateFalse, AuthenticateTrue } from "./redux/slices/userSlice";
+import RutaProtegidaAdmin from "./utils/RutaProtegidaAdmin";
 axios.defaults.baseURL = "http://localhost:3001/";
 export default function App() {
   const routes = createBrowserRouter([
@@ -21,7 +22,13 @@ export default function App() {
     },
     {
       path: "/dashboard",
-      element: <DashBoard />,
+      element: <RutaProtegidaAdmin />,
+      children: [
+        {
+          path:"",
+          element:  <DashBoard/>
+        }
+      ]
     },
     {
       path: "/login",
