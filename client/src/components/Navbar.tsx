@@ -37,6 +37,12 @@ function Navbar() {
                 <button onClick={handlerLogout} >Desloguear</button>
             </li>
           }
+          {
+            user && user.isAdmin === true &&
+            <Link to="/dashboard">
+            <li>Dashboard</li>
+          </Link>
+          }
         </ul>
       </nav>
       <ContadorPedidosTerminados />
