@@ -4,7 +4,7 @@ import Home from "./vistas/Home";
 import Login from "./vistas/Login";
 import Registro from "./vistas/Registro";
 import Chef from "./vistas/Chef";
-import Mosa from "./vistas/Mosa";
+import PedidoListo from "./vistas/PedidoListo";
 import MesaID from "./vistas/MesaID";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import axios from "axios";
@@ -36,8 +36,8 @@ export default function App() {
       element: <Chef />,
     },
     {
-      path: "/mosa",
-      element: <Mosa />,
+      path: "/pedidoListo",
+      element: <PedidoListo />,
     },
     {
       path: "/mesa/:id",
