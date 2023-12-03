@@ -57,6 +57,7 @@ const loginUser = async (req, res) => {
     res.cookie("token", token, {
       sameSite: "None",
       secure: true,
+      domain:"localhost"
     });
     res.status(200).json({ user: findUser });
   } catch (error) {
