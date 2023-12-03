@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MesaComponent from "../components/MesaComponent";
 import useMesa from "../hooks/useMesa";
+import { Link } from "react-router-dom";
 // import useUsers from "../hooks/useUsers";
 
 export default function Home() {
@@ -15,7 +16,9 @@ export default function Home() {
   
   return (
     <main>
+      <Link to="/pedidoListo" >
       <span className="font-semibold text-xl fixed top-0 right-6" >Pedidos Terminados: {pedidoListo}</span>
+      </Link>
       {isError && <p>Error</p>}
       {isLoading && <p>is Loading</p>}
       {isSuccess &&
