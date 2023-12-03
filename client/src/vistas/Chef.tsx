@@ -26,7 +26,7 @@ export default function Chef() {
       {isLoading && <p>Cargando</p>}
 
       {isSuccess &&
-        mesasListas!.length > 0 ? mesasListas?.map((m: MesaInterface) => (
+        mesasListas && mesasListas!.length > 0 ? mesasListas?.map((m: MesaInterface) => (
           <MesaChef
             key={m._id}
             pedido={m.pedido}
