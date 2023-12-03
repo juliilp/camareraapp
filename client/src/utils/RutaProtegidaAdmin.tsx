@@ -1,12 +1,16 @@
-import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect, ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import useUsers from "../hooks/useUsers";
 
-export default function RutaProtegidaAdmin() {
+interface Props {
+  children: ReactNode
+}
+
+export default function RutaProtegidaAdmin({children}: Props) {
+  console.log("hola")
   const { isAuthenticate, user } = useUsers();
   const navigate = useNavigate();
   useEffect(() => {
-    console.log(isAuthenticate, user.isAdmin);
     if (
       isAuthenticate === false ||
       user.isAdmin === false ||
@@ -16,5 +20,7 @@ export default function RutaProtegidaAdmin() {
     }
   }, [user, navigate, isAuthenticate]);
 
-  return <Outlet></Outlet>;
+  return <>
+  {children}
+  </>;
 }
