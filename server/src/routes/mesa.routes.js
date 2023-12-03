@@ -14,7 +14,7 @@ const mesaRoutes = Router();
 
 mesaRoutes.get("/allMesas", allMesas);
 mesaRoutes.post("/create", createMesa);
-mesaRoutes.put("/editMesa/:id", editMesa);
+mesaRoutes.put("/editMesa/:id",authRequired ,editMesa);
 mesaRoutes.delete("/deleteMesa/:id", authRequired, isAdmin, deleteMesaForAdmin);
 mesaRoutes.put("/agregarPedido/:id", addProductMesa);
 mesaRoutes.get("/:id", MesaPorId);
