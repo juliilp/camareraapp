@@ -19,7 +19,6 @@ export default function MesaChef({
       const res = await axios.put(`mesa/editMesa/${_id}`, {
         pedidoParaEntregar: true,
         pedidoListo: false,
-        pedido: [],
       });
       if (res.status === 200 && typeof handlerMesaActualizada === "function") {
         handlerMesaActualizada(_id);
