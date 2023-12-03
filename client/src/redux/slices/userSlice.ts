@@ -31,7 +31,7 @@ const userSlice = createSlice({
       state.isAuthenticate = true;
     },
     AuthenticateFalse: (state) => {
-      state.isAuthenticate = false;
+      state.isAuthenticate = null;
     },
   },
   extraReducers: (builder) => {
