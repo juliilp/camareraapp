@@ -15,7 +15,7 @@ export default function DashBoard() {
   const navigate = useNavigate();
   useEffect(() => {
     console.log(isAuthenticate, user.isAdmin);
-    if (isAuthenticate === false || user.isAdmin === false) {
+    if (isAuthenticate === false || user.isAdmin === false || isAuthenticate === null) {
       navigate("/");
     }
   }, [user, navigate, isAuthenticate]);
