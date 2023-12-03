@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react"
+import { useState} from "react"
 import axios from 'axios'
 import { useDispatch} from "react-redux"
-import { addUser } from "../redux/slices/userSlice"
-import useUsers from "../hooks/useUsers"
+import { addUser,AuthenticateTrue } from "../redux/slices/userSlice"
 import { useNavigate } from "react-router-dom"
 export default function Login() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const {isAuthenticate} = useUsers()
   const [user, setUser] = useState({
     email:"",
     password:""
@@ -24,8 +22,11 @@ export default function Login() {
     try {
       e.preventDefault()
       const res = await axios.post("/user/login", {email: user.email, password: user.password}, {withCredentials: true})
-      console.log(res.data)
-      dispatch(addUser(res.data.user))
+      if(res.status === 200) {
+        dispatch(addUser(res.data.user))
+        dispatch(AuthenticateTrue())
+        navigate("/")
+      }
       
     } catch (error ) {
       console.log(error)
@@ -36,11 +37,6 @@ export default function Login() {
     })
   }
 
-  useEffect(() => {
-    if(isAuthenticate){
-      navigate("/")
-    }
-  },[isAuthenticate])
   return (
     <main>
       <form >
