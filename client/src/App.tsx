@@ -18,6 +18,7 @@ import {
 } from "./redux/slices/userSlice";
 import RutaProtegidaAdmin from "./utils/RutaProtegidaAdmin";
 import RutaUserAuthenticate from "./utils/RutaUserAuthenticate";
+import Navbar from "./components/Navbar";
 axios.defaults.baseURL = "http://localhost:3001/";
 export default function App() {
   const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ export default function App() {
     
       <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <Navbar></Navbar>
       <Routes>
       <Route  path="/" element={ <Home />} />
       <Route path="/dashboard" element={
