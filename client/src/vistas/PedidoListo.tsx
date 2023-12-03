@@ -20,11 +20,11 @@ export default function Mosa() {
     <main>
 
       {
-        mesasPedidoListo?.map((mesa, index) => {
+       mesasPedidoListo && mesasPedidoListo.length > 0 ? mesasPedidoListo?.map((mesa, index) => {
           return <MesaDePedidosListos 
           funcionActualizarMesas={funcionActualizarMesa}
           numeroMesa={mesa.numeroMesa} pedido={mesa.pedido} key={index} _id={mesa._id} />
-        })
+        }) : <p>No hay pedidos terminados</p>
       }
     </main>
   )

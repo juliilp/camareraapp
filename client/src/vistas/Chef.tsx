@@ -19,13 +19,14 @@ export default function Chef() {
       (prevMesas) => prevMesas && prevMesas.filter((m) => m._id !== mesaId)
     );
   };
+  console.log(mesasListas)
   return (
     <section>
       {isError && <p>Error</p>}
       {isLoading && <p>Cargando</p>}
 
       {isSuccess &&
-        mesasListas?.map((m: MesaInterface) => (
+        mesasListas!.length > 0 ? mesasListas?.map((m: MesaInterface) => (
           <MesaChef
             key={m._id}
             pedido={m.pedido}
@@ -33,7 +34,7 @@ export default function Chef() {
             numeroMesa={m.numeroMesa}
             handlerMesaActualizada={() => handleMesaActualizada(m._id)}
           />
-        ))}
+        )) : <h2>No hay pedidos para completar</h2>}
     </section>
   );
 }
