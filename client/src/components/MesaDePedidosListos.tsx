@@ -10,11 +10,11 @@ export default function MesaDePedidosListos({numeroMesa,pedido, _id, funcionActu
     async function handlerPedidoListo() {
         const responseConfirm =confirm("Estas seguro/a que es la mesa " + numeroMesa + " ?")
         if(responseConfirm) {
-            const res = await axios.put(`mesa/editMesa/${_id}`, {
+            const res = await axios.put(`mesa/editMesa/${_id}`, { 
                 pedidoParaEntregar: false,
                 pedidoListo: false,
                 pedido: [],
-              });
+              }, {withCredentials: true,});
 
               if(res.status === 200) {
                 funcionActualizarMesas(_id!)
